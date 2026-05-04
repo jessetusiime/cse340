@@ -1,0 +1,30 @@
+{
+  "name": "cse340",
+  "version": "1.0.0",
+  "description": "Web Backend Development",
+  "keywords": [
+    "backend"
+  ],
+  "homepage": "https://github.com/jessetusiime/cse340#readme",
+  "bugs": {
+    "url": "https://github.com/jessetusiime/cse340/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jessetusiime/cse340.git"
+  },
+  "license": "UNLICENSED",
+  "author": "Tusiime Jesse",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
