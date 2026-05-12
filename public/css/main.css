@@ -90,8 +90,6 @@ p {
     background: var(--category-bg);
     margin: 0.5rem 0;
     padding: 1rem;
-    border-left: 5px solid var(--category-border);
-    box-shadow: 0 2px 5px var(--category-shadow);
 }
 
 footer {
