@@ -22,6 +22,28 @@ CREATE TABLE project (
 		ON DELETE CASCADE
 );
 
+CREATE TABLE category (
+    category_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE project_category (
+    project_id INT NOT NULL,
+    category_id INT NOT NULL,
+
+    PRIMARY KEY (project_id, category_id),
+
+    CONSTRAINT fk_project
+        FOREIGN KEY (project_id)
+        REFERENCES project(project_id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_category
+        FOREIGN KEY (category_id)
+        REFERENCES category(category_id)
+        ON DELETE CASCADE
+);
+
 -- Insert sample data: Organizations
 
 INSERT INTO organization (name, description, contact_email, logo_filename)
@@ -71,3 +93,25 @@ VALUES
 (3, 'Health Camp Support', 'Supported local clinics.', 'Arua', '2026-03-17'),
 (3, 'Youth Mentorship Program', 'Mentored local students.', 'Mbale', '2026-04-21'),
 (3, 'Community Cleanup Campaign', 'Organized neighborhood cleanup.', 'Fort Portal', '2026-05-06');
+
+INSERT INTO category (name)
+VALUES
+('Community Development'),
+('Environment'),
+('Education'),
+('Healthcare'),
+('Volunteer Service');
+
+INSERT INTO project_category (project_id, category_id)
+VALUES
+(1, 1),
+(1, 5),
+
+(2, 1),
+
+(3, 2),
+(3, 3),
+
+(4, 3),
+
+(5, 4);
