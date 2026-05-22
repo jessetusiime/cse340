@@ -115,3 +115,26 @@ VALUES
 (4, 3),
 
 (5, 4);
+
+SELECT project_id, title, project_date
+FROM project;
+
+UPDATE project
+SET project_date = '2026-12-01'
+WHERE project_id = 1;
+
+UPDATE project
+SET project_date = '2026-12-05'
+WHERE project_id = 2;
+
+UPDATE project
+SET project_date = '2026-12-10'
+WHERE project_id = 3;
+
+UPDATE project
+SET project_date = '2026-12-15'
+WHERE project_id = 4;
+
+UPDATE project
+SET project_date = '2026-12-20'
+WHERE project_id = 5;
