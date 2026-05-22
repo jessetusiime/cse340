@@ -15,7 +15,11 @@ const showOrganizationDetailsPage = async (req, res) => {
     const projects = await getProjectsByOrganizationId(organizationId);
     const title = 'Organization Details';
 
-    res.render('organization', { title, organizationDetails, projects });
+    res.render('organization', {
+        title,
+        organization: organizationDetails,
+        projects
+    });
 };
 
 // Export any controller functions
