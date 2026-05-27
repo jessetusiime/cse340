@@ -3,21 +3,28 @@
     <main>
 
         <h1>
-            <%= organization.name %>
+            <%= organizationDetails.name %>
         </h1>
 
-        <img src="/images/<%= organization.logo_filename %>" alt="<%= organization.name %> logo">
+        <img src="/images/<%= organizationDetails.logo_filename %>" alt="<%= organizationDetails.name %> logo">
 
         <p>
-            <%= organization.description %>
+            <%= organizationDetails.description %>
         </p>
 
         <p>
             Contact Email:
-            <%= organization.contact_email %>
+            <%= organizationDetails.contact_email %>
+        </p>
+
+        <p>
+            <a href="/edit-organization/<%= organizationDetails.organization_id %>">
+                Edit Organization
+            </a>
         </p>
 
         <h2>Service Projects</h2>
+
         <% if (projects.length> 0) { %>
             <ul>
                 <% projects.forEach(project=> { %>
