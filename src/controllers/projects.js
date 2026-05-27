@@ -1,4 +1,4 @@
-import { getUpcomingProjects, getProjectDetails, getCategoriesByProjectId, createProject } from '../models/projects.js';
+import { getUpcomingProjects, getProjectDetails, getCategoriesByProjectId, createProject, updateProject } from '../models/projects.js';
 import { getAllOrganizations } from '../models/organizations.js'; 
 import { body, validationResult } from 'express-validator';
 
@@ -53,6 +53,31 @@ const showProjectDetailsPage = async (req, res) => {
     });
 };
 
+const showEditProjectForm = async (req, res) => {
+    const projectId = req.params.id;
+    const project = await getProjectDetails(projectId);
+    const organizations = await getAllOrganizations();
+
+    res.render('edit-project', { title: 'Edit Project', project, organizations });
+};
+
+const processEditProjectForm = async (req, res) => {
+    const projectId = req.params.id;
+
+    const results = validationResult(req);
+    if (!results.isEmpty()) {
+        results.array().forEach(error => req.flash('error', error.msg));
+        return res.redirect('/edit-project/' + projectId);
+    }
+
+    const { title, description, location, project_date, organizationId } = req.body;
+
+    await updateProject(projectId, title, description, location, project_date, organizationId);
+
+    req.flash('success', 'Project updated successfully!');
+    res.redirect(`/project/${projectId}`);
+};
+
 const showNewProjectForm = async (req, res) => {
     const organizations = await getAllOrganizations();
     const title = 'Add New Service Project';
@@ -96,5 +121,7 @@ export {
     showProjectDetailsPage,
     showNewProjectForm,
     processNewProjectForm,
-    projectValidation
+    projectValidation,
+    showEditProjectForm,
+    processEditProjectForm
 };
