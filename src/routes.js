@@ -22,6 +22,9 @@ import {
     processEditCategoryForm,
     categoryValidation } from './controllers/categories.js';
 import { showEditProjectForm, processEditProjectForm } from './controllers/projects.js';
+import { showUserRegistrationForm, processUserRegistrationForm } from './controllers/users.js'; 
+import { showLoginForm, processLoginForm, processLogout, } from './controllers/users.js';
+import { requireLogin, showDashboard } from './controllers/users.js';
 
 const router = express.Router();
 
@@ -39,6 +42,10 @@ router.get('/category/:id', showCategoryDetailsPage);
 router.get('/assign-categories/:projectId', showAssignCategoriesForm);
 router.get('/new-category', showNewCategoryForm);
 router.get('/edit-category/:id', showEditCategoryForm);
+router.get('/register', showUserRegistrationForm);
+router.get('/login', showLoginForm);
+router.get('/logout', processLogout);
+router.get('/dashboard', requireLogin, showDashboard);
 
 // Route to handle new organization form submission
 router.post('/new-organization', organizationValidation, processNewOrganizationForm);
@@ -48,6 +55,8 @@ router.post('/assign-categories/:projectId', processAssignCategoriesForm);
 router.post('/edit-project/:id', projectValidation, processEditProjectForm);
 router.post('/new-category', categoryValidation, processNewCategoryForm);
 router.post('/edit-category/:id', categoryValidation, processEditCategoryForm);
+router.post('/register', processUserRegistrationForm);
+router.post('/login', processLoginForm);
 
 // error-handling routes
 router.get('/test-error', testErrorPage);
