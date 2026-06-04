@@ -25,36 +25,38 @@ import { showEditProjectForm, processEditProjectForm } from './controllers/proje
 import { showUserRegistrationForm, processUserRegistrationForm } from './controllers/users.js'; 
 import { showLoginForm, processLoginForm, processLogout, } from './controllers/users.js';
 import { requireLogin, showDashboard } from './controllers/users.js';
+import { requireRole } from './controllers/users.js';
 
 const router = express.Router();
 
 router.get('/', showHomePage);
 router.get('/organizations', showOrganizationsPage);
 router.get('/organization/:id', showOrganizationDetailsPage);
-router.get('/new-organization', showNewOrganizationForm);
-router.get('/edit-organization/:id', showEditOrganizationForm);
+router.get('/new-organization', requireRole('admin'), showNewOrganizationForm);
+router.get('/edit-organization/:id', requireRole('admin'), showEditOrganizationForm);
 router.get('/projects', showProjectsPage);
 router.get('/project/:id', showProjectDetailsPage);
-router.get('/new-project', showNewProjectForm);
-router.get('/edit-project/:id', showEditProjectForm);
+router.get('/new-project', requireRole('admin'), showNewProjectForm);
+router.get('/edit-project/:id', requireRole('admin'), showEditProjectForm);
 router.get('/categories', showCategoriesPage);
 router.get('/category/:id', showCategoryDetailsPage);
 router.get('/assign-categories/:projectId', showAssignCategoriesForm);
-router.get('/new-category', showNewCategoryForm);
-router.get('/edit-category/:id', showEditCategoryForm);
+router.get('/new-category', requireRole('admin'), showNewCategoryForm);
+router.get('/edit-category/:id', requireRole('admin'), showEditCategoryForm);
 router.get('/register', showUserRegistrationForm);
 router.get('/login', showLoginForm);
 router.get('/logout', processLogout);
 router.get('/dashboard', requireLogin, showDashboard);
 
+
 // Route to handle new organization form submission
-router.post('/new-organization', organizationValidation, processNewOrganizationForm);
-router.post('/edit-organization/:id', organizationValidation, processEditOrganizationForm);
-router.post('/new-project', projectValidation, processNewProjectForm);
+router.post('/new-organization', requireRole('admin'), organizationValidation, processNewOrganizationForm);
+router.post('/edit-organization/:id', requireRole('admin'), organizationValidation, processEditOrganizationForm);
+router.post('/new-project', requireRole('admin'), projectValidation, processNewProjectForm);
 router.post('/assign-categories/:projectId', processAssignCategoriesForm);
-router.post('/edit-project/:id', projectValidation, processEditProjectForm);
-router.post('/new-category', categoryValidation, processNewCategoryForm);
-router.post('/edit-category/:id', categoryValidation, processEditCategoryForm);
+router.post('/edit-project/:id', requireRole('admin'), projectValidation, processEditProjectForm);
+router.post('/new-category', requireRole('admin'), categoryValidation, processNewCategoryForm);
+router.post('/edit-category/:id', requireRole('admin'), categoryValidation, processEditCategoryForm);
 router.post('/register', processUserRegistrationForm);
 router.post('/login', processLoginForm);
 
