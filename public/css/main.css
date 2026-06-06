@@ -94,14 +94,6 @@ nav ul li a:hover {
     color: white;
 }
 
-nav ul {
-    justify-content: flex-start;
-}
-
-nav ul li:last-child {
-    margin-left: auto;
-}
-
 main {
     max-width: 1200px;
     margin: 2rem auto;
