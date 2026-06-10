@@ -2,6 +2,11 @@ import bcrypt from 'bcrypt';
 import { createUser } from '../models/users.js';
 import { authenticateUser } from '../models/users.js';
 import { getAllUsers } from '../models/users.js';
+import {
+    addVolunteer,
+    removeVolunteer,
+    getVolunteerProjects
+} from '../models/volunteers.js';
 
 const showUserRegistrationForm = (req, res) => {
     res.render('register', { title: 'Register' });
@@ -75,14 +80,45 @@ const requireLogin = (req, res, next) => {
     next();
 };
 
-const showDashboard = (req, res) => {
+const showDashboard = async (req, res) => {
+
     const user = req.session.user;
+
+    const volunteerProjects = await getVolunteerProjects(
+        user.user_id
+    );
+
     res.render('dashboard', {
         title: 'Dashboard',
         name: user.name,
         email: user.email,
-        user
+        user,
+        volunteerProjects
     });
+};
+
+const processVolunteerSignup = async (req, res) => {
+
+    const userId = req.session.user.user_id;
+    const projectId = req.params.projectId;
+
+    await addVolunteer(userId, projectId);
+
+    req.flash('success', 'You have signed up to volunteer.');
+
+    res.redirect(`/project/${projectId}`);
+};
+
+const processVolunteerRemoval = async (req, res) => {
+
+    const userId = req.session.user.user_id;
+    const projectId = req.params.projectId;
+
+    await removeVolunteer(userId, projectId);
+
+    req.flash('success', 'Volunteer signup removed.');
+
+    res.redirect(`/project/${projectId}`);
 };
 
 const requireRole = (role) => {
@@ -114,4 +150,4 @@ const showUsersPage = async (req, res) => {
     });
 };
 
-export { showUserRegistrationForm, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout, requireLogin, showDashboard, requireRole, showUsersPage };
+export { showUserRegistrationForm, processUserRegistrationForm, showLoginForm, processLoginForm, processLogout, requireLogin, showDashboard, requireRole, showUsersPage, processVolunteerSignup, processVolunteerRemoval };

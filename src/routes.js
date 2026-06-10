@@ -4,7 +4,7 @@ import { showHomePage } from './controllers/index.js';
 import { showOrganizationsPage } from './controllers/organizations.js';
 import { showCategoriesPage } from './controllers/categories.js';
 import { showCategoryDetailsPage } from './controllers/categories.js';
-import { showProjectsPage, showProjectDetailsPage } from './controllers/projects.js';   
+import { showProjectsPage, showProjectDetailsPage } from './controllers/projects.js';
 import { testErrorPage } from './controllers/errors.js';
 import { showOrganizationDetailsPage } from './controllers/organizations.js';
 import { showNewOrganizationForm } from './controllers/organizations.js';
@@ -20,13 +20,15 @@ import {
     processNewCategoryForm,
     showEditCategoryForm,
     processEditCategoryForm,
-    categoryValidation } from './controllers/categories.js';
+    categoryValidation
+} from './controllers/categories.js';
 import { showEditProjectForm, processEditProjectForm } from './controllers/projects.js';
-import { showUserRegistrationForm, processUserRegistrationForm } from './controllers/users.js'; 
+import { showUserRegistrationForm, processUserRegistrationForm } from './controllers/users.js';
 import { showLoginForm, processLoginForm, processLogout, } from './controllers/users.js';
 import { requireLogin, showDashboard } from './controllers/users.js';
 import { requireRole } from './controllers/users.js';
 import { showUsersPage } from './controllers/users.js';
+import { processVolunteerSignup, processVolunteerRemoval } from './controllers/volunteers.js';
 
 const router = express.Router();
 
@@ -48,6 +50,8 @@ router.get('/register', showUserRegistrationForm);
 router.get('/login', showLoginForm);
 router.get('/logout', processLogout);
 router.get('/dashboard', requireLogin, showDashboard);
+router.get('/volunteer/:projectId', requireLogin, processVolunteerSignup);
+router.get('/remove-volunteer/:projectId', requireLogin, processVolunteerRemoval);
 router.get('/users', requireRole('admin'), showUsersPage);
 
 

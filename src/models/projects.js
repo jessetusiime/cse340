@@ -57,7 +57,7 @@ const getUpcomingProjects = async (number_of_projects) => {
         LIMIT $1
     `;
 
-    const result = await db.query(query, [number_of_projects]); 
+    const result = await db.query(query, [number_of_projects]);
     return result.rows;
 };
 
@@ -78,7 +78,7 @@ const getProjectDetails = async (id) => {
         WHERE p.project_id = $1
     `;
 
-    const result = await db.query(query, [id]); 
+    const result = await db.query(query, [id]);
     return result.rows[0];
 };
 
@@ -123,25 +123,25 @@ const getCategoriesByProjectId = async (projectId) => {
 };
 
 const updateProject = async (projectId, title, description, location, project_date, organizationId) => {
-  const query = `
+    const query = `
     UPDATE project
     SET title = $1, description = $2, location = $3, project_date = $4
     WHERE project_id = $5
     RETURNING project_id;
   `;
 
-  const queryParams = [title, description, location, project_date, projectId];
-  const result = await db.query(query, queryParams);
+    const queryParams = [title, description, location, project_date, projectId];
+    const result = await db.query(query, queryParams);
 
-  if (result.rows.length === 0) {
-    throw new Error('Project not found');
-  }
+    if (result.rows.length === 0) {
+        throw new Error('Project not found');
+    }
 
-  if (process.env.ENABLE_SQL_LOGGING === 'true') {
-    console.log('Updated project with ID:', projectId);
-  }
+    if (process.env.ENABLE_SQL_LOGGING === 'true') {
+        console.log('Updated project with ID:', projectId);
+    }
 
-  return result.rows[0].project_id;
+    return result.rows[0].project_id;
 };
 
 export { getAllProjects, getProjectsByOrganizationId, getUpcomingProjects, getProjectDetails, getCategoriesByProjectId, createProject, updateProject };

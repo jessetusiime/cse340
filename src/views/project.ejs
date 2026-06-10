@@ -5,15 +5,18 @@
             <%= project.title %>
         </h1>
 
-        <p><strong>Description:</strong>
+        <p>
+            <strong>Description:</strong>
             <%= project.description %>
         </p>
 
-        <p><strong>Date:</strong>
+        <p>
+            <strong>Date:</strong>
             <%= project.project_date %>
         </p>
 
-        <p><strong>Location:</strong>
+        <p>
+            <strong>Location:</strong>
             <%= project.location %>
         </p>
 
@@ -26,21 +29,15 @@
         </p>
 
         <h3>Categories</h3>
-        
+
         <ul>
-        
             <% categories.forEach(category=> { %>
-        
                 <li>
-        
                     <a href="/category/<%= category.category_id %>">
                         <%= category.name %>
                     </a>
-        
                 </li>
-        
                 <% }) %>
-        
         </ul>
 
         <p>
@@ -49,13 +46,22 @@
             </a>
         </p>
 
+        <% if (user && user.role_name==='admin' ) { %>
             <p>
-                <% if (user && user.role_name==='admin' ) { %>
-                    <a href="/edit-project/<%= project.project_id %>">
-                        Edit Project
-                    </a>
-                    <% } %>
+                <a href="/edit-project/<%= project.project_id %>">
+                    Edit Project
+                </a>
             </p>
+            <% } %>
+
+                <% if (isLoggedIn) { %>
+                    <p>
+                        <a href="/volunteer/<%= project.project_id %>">
+                            Volunteer For This Project
+                        </a>
+                    </p>
+                    <% } %>
+
     </main>
 
     <%- include('partials/footer') %>
