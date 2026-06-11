@@ -23,6 +23,34 @@
 
             <% } %>
 
+            <h3>My Volunteer Projects</h3>
+            
+            <% if (volunteerProjects.length> 0) { %>
+            
+                <ul>
+            
+                    <% volunteerProjects.forEach(project=> { %>
+            
+                        <li>
+                            <%= project.title %>
+            
+                                <a href="/remove-volunteer/<%= project.project_id %>">
+                                    Remove
+                                </a>
+                        </li>
+            
+                        <% }) %>
+            
+                </ul>
+            
+                <% } else { %>
+            
+                    <p>
+                        You have not signed up for any projects yet.
+                    </p>
+            
+                    <% } %>
+
     </main>
 
     <%- include('partials/footer') %>

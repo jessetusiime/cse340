@@ -81,12 +81,10 @@ const requireLogin = (req, res, next) => {
 };
 
 const showDashboard = async (req, res) => {
-
     const user = req.session.user;
 
-    const volunteerProjects = await getVolunteerProjects(
-        user.user_id
-    );
+    const volunteerProjects =
+        await getVolunteerProjects(user.user_id);
 
     res.render('dashboard', {
         title: 'Dashboard',
