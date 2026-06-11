@@ -55,12 +55,30 @@
             <% } %>
 
                 <% if (isLoggedIn) { %>
-                    <p>
-                        <a href="/volunteer/<%= project.project_id %>">
-                            Volunteer For This Project
-                        </a>
-                    </p>
-                    <% } %>
+                
+                    <% if (!volunteering) { %>
+                
+                        <p>
+                            <a href="/volunteer/<%= project.project_id %>">
+                                Volunteer For This Project
+                            </a>
+                        </p>
+                
+                        <% } else { %>
+                
+                            <p>
+                                You are volunteering for this project.
+                            </p>
+                
+                            <p>
+                                <a href="/remove-volunteer/<%= project.project_id %>">
+                                    Remove Volunteer Signup
+                                </a>
+                            </p>
+                
+                            <% } %>
+                
+                                <% } %>
 
     </main>
 
